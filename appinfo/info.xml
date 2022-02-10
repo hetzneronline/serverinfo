@@ -2,18 +2,20 @@
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>serverinfo</id>
-    <name>Monitoring</name>
+    <name>Monitoring (Hetzner Storage Share)</name>
     <summary>Monitoring app with useful server information</summary>
-    <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
+    <description>Provides useful server information, such as disk usage, number of users, etc. This is an adapted version for Hetzner Storage Shares.</description>
     <version>1.13.0</version>
     <licence>agpl</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
     <author>Frank Karlitschek</author>
+    <author>Hetzner Online GmbH</author>
     <namespace>ServerInfo</namespace>
     <default_enable/>
     <category>monitoring</category>
-    <bugs>https://github.com/nextcloud/serverinfo/issues</bugs>
+    <bugs>https://konsoleh.your-server.de/support.php</bugs>
+    <website>https://github.com/hetzneronline/serverinfo</website>
     <dependencies>
 		<nextcloud min-version="23" max-version="23" />
     </dependencies>
