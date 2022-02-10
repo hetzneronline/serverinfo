@@ -56,7 +56,7 @@ class Os implements IOperatingSystem {
 	 * @return string
 	 */
 	public function getHostname(): string {
-		return (string)gethostname();
+		return 'N/A';
 	}
 
 	/**
@@ -65,7 +65,7 @@ class Os implements IOperatingSystem {
 	 * @return string
 	 */
 	public function getOSName(): string {
-		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
+		return 'N/A';
 	}
 
 	/**

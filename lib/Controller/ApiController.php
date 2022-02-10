@@ -200,7 +200,9 @@ class ApiController extends OCSController {
 	 */
 	private function getWebserver(): string {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
-			return $_SERVER['SERVER_SOFTWARE'];
+			$matches = [];
+			preg_match('/^(\w+)/', $_SERVER['SERVER_SOFTWARE'], $matches);
+			return array_key_exists(0, $matches) ? $matches[0] : 'unknown';
 		}
 		return 'unknown';
 	}

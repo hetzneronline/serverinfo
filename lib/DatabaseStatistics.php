@@ -166,7 +166,7 @@ class DatabaseStatistics {
 	 */
 	protected function cleanVersion(string $version): string {
 		$matches = [];
-		preg_match('/^(\d+)(\.\d+)(\.\d+)/', $version, $matches);
+		preg_match('/^(\d+)(\.\d+)/', $version, $matches);
 		if (isset($matches[0])) {
 			return $matches[0];
 		}

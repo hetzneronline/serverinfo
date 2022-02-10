@@ -52,7 +52,7 @@ $disks = $_['diskinfo'];
 			<div class="col col-12">
 				<h2>
 					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
-					<?php p($_['hostname']); ?>
+					<?php p($l->t('System')); ?>
 				</h2>
 				<div class="table-wrapper">
 					<table class="server-infos-table">
@@ -84,33 +84,9 @@ $disks = $_['diskinfo'];
 				</div>
 			</div>
 
-			<div class="col col-6 col-l-12">
-				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
-					<?php p($l->t('Load')); ?>
-				</h2>
-				<div id="cpuSection" class="infobox">
-					<div class="cpu-wrapper">
-						<canvas id="cpuloadcanvas" style="width:100%; height:200px" width="600" height="200"></canvas>
-					</div>
-				</div>
-				<p><em id="cpuFooterInfo"></em></p>
+			<div class="col col-12">
+				<p><?php p($l->t('Server time').':'); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
 			</div>
-
-			<div class="col col-6 col-l-12">
-				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'actions/quota.svg')); ?>">
-					<?php p($l->t('Memory')); ?>
-				</h2>
-				<div id="memorySection" class="infobox">
-					<div class="memory-wrapper">
-						<canvas id="memorycanvas" style="width:100%; height:200px" width="600" height="200"></canvas>
-					</div>
-				</div>
-				<p><span class="rambox" id="rambox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="memFooterInfo"></em></p>
-				<p><span class="swapbox" id="swapbox">&nbsp;&nbsp;</span>&nbsp;&nbsp;<em id="swapFooterInfo"></em></p>
-			</div>
-
 		</div>
 	</div>
 
@@ -123,29 +99,6 @@ $disks = $_['diskinfo'];
 					<?php p($l->t('Disk')); ?>
 				</h2>
 			</div>
-			<?php foreach ($disks as $disk): ?>
-				<div class="col col-4 col-xl-6 col-m-12">
-					<div class="infobox">
-						<div class="diskchart-container">
-							<canvas id="DiskChart" class="DiskChart" style="width:100%; height:200px" width="600"
-									height="200"></canvas>
-						</div>
-						<div class="diskinfo-container">
-							<h3><?php p(basename($disk->getDevice())); ?></h3>
-							<?php p($l->t('Mount')); ?>:
-							<span class="info"><?php p($disk->getMount()); ?></span><br>
-							<?php p($l->t('Filesystem')); ?>:
-							<span class="info"><?php p($disk->getFs()); ?></span><br>
-							<?php p($l->t('Size')); ?>:
-							<span class="info"><?php p(FormatMegabytes($disk->getUsed() + $disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Available')); ?>:
-							<span class="info"><?php p(FormatMegabytes($disk->getAvailable())); ?></span><br>
-							<?php p($l->t('Used')); ?>:
-							<span class="info"><?php p($disk->getPercent()); ?></span><br>
-						</div>
-					</div>
-				</div>
-			<?php endforeach; ?>
 		</div>
 
 		<div class="smallinfo">
@@ -157,59 +110,6 @@ $disks = $_['diskinfo'];
 		<?php if ($_['system']['freespace'] !== null): ?>
 			<p><?php p($l->t('Free Space:')); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong></p>
 		<?php endif; ?>
-	</div>
-
-	<!-- NETWORK -->
-	<div class="section network-infos">
-		<div class="row">
-			<div class="col col-12">
-				<h2>
-					<img class="infoicon" src="<?php p(image_path('core', 'categories/integration.svg')); ?>">
-					<?php p($l->t('Network')); ?>
-				</h2>
-			</div>
-
-			<div class="col col-12">
-				<?php p($l->t('Hostname')); ?>:
-				<span class="info"><?php p($_['networkinfo']['hostname']); ?></span>
-			</div>
-			<div class="col col-12">
-				<?php p($l->t('DNS')); ?>:
-				<span class="info"><?php p($_['networkinfo']['dns']); ?></span>
-			</div>
-			<div class="col col-12">
-				<?php p($l->t('Gateway')); ?>:
-				<span class="info"><?php p($_['networkinfo']['gateway']); ?></span>
-			</div>
-			<div class="col col-12">
-				<div class="row">
-					<?php foreach ($_['networkinterfaces'] as $interface): ?>
-
-						<div class="col col-4 col-l-6 col-m-12">
-							<div class="infobox">
-								<div class="interface-wrapper">
-									<h3><?php p($interface['interface']) ?></h3>
-									<?php p($l->t('Status')); ?>:
-									<span class="info"><?php p($interface['status']) ?></span><br>
-									<?php p($l->t('Speed')); ?>:
-									<span
-										class="info"><?php p($interface['speed'] . ' ' . $interface['duplex']) ?></span><br>
-									<?php if (!empty($interface['mac'])): ?>
-										<?php p($l->t('MAC')); ?>:
-										<span class="info"><?php p($interface['mac']) ?></span><br>
-									<?php endif; ?>
-									<?php p($l->t('IPv4')); ?>:
-									<span class="info"><?php p($interface['ipv4']) ?></span><br>
-									<?php p($l->t('IPv6')); ?>:
-									<span class="info"><?php p($interface['ipv6']) ?></span>
-								</div>
-							</div>
-						</div>
-
-					<?php endforeach; ?>
-				</div>
-			</div>
-		</div>
 	</div>
 
 	<!-- ACTIVE USER & SHARES-->
@@ -288,7 +188,7 @@ $disks = $_['diskinfo'];
 							<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Upload max size:')); ?>
+							<?php p($l->t('Upload max size').' (WebDAV):'); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
 						</p>
 					</div>
