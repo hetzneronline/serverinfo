@@ -56,24 +56,8 @@ $disks = $_['diskinfo'];
 				</h2>
 			</div>
 			<div class="col col-12">
-				<p><?php p($l->t('Operating System').':'); ?> <strong id="numFilesStorage"><?php p($_['osname']); ?></strong></p>
-				<p><?php p($l->t('CPU').':'); ?>
-				<?php if ($_['cpu'] !== 'Unknown Processor'): ?>
-				<strong id="numFilesStorage"><?php p($_['cpu']) ?></strong></p>
-				<?php else: ?>
-				<strong id="numFilesStorage"><?php p($l->t('Unknown Processor')) ?></strong></p>
-				<?php endif; ?>
-				<p><?php p($l->t('Memory').':'); ?>
-				<?php if ($memory->getMemTotal() > 0): ?> <strong id="numFilesStorage"><?php p(FormatMegabytes($memory->getMemTotal())) ?></strong></p>
-				<?php endif; ?>
-				<p><?php p($l->t('Server time').':'); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
-				<p><?php p($l->t('Uptime').':'); ?> <strong id="numFilesStorage"><span class="info" id="uptime"></span></strong></p>
-			</div>
-
-			<div class="col col-12">
 				<p><?php p($l->t('Server time').':'); ?> <strong id="numFilesStorage"><span class="info" id="servertime"></span></strong></p>
 			</div>
-
 		</div>
 	</div>
 
