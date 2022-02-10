@@ -46,7 +46,7 @@ class PhpStatistics {
 
 	public function getPhpStatistics(): array {
 		return [
-			'version' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION,
+			'version' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
 			'memory_limit' => $this->phpIni->getBytes('memory_limit'),
 			'max_execution_time' => $this->phpIni->getNumeric('max_execution_time'),
 			'upload_max_filesize' => $this->phpIni->getBytes('upload_max_filesize'),
