@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "CPU információ nem elérhető",
     "Load average: {cpu} (last minute)" : "Terhelési átlag: {cpu} (utolsó perc)",

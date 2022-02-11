@@ -22,11 +22,11 @@ declare(strict_types=1);
  *
  */
 
-script('serverinfo', 'script');
-script('serverinfo', 'smoothie');
-script('serverinfo', 'Chart.min');
+script('serverinfo_hetzner', 'script');
+script('serverinfo_hetzner', 'smoothie');
+script('serverinfo_hetzner', 'Chart.min');
 
-style('serverinfo', 'style');
+style('serverinfo_hetzner', 'style');
 
 function FormatMegabytes(int $byte): string {
 	$unim = ['MB', 'GB', 'TB', 'PB'];
@@ -38,9 +38,9 @@ function FormatMegabytes(int $byte): string {
 	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
 }
 
-/** @var \OCA\ServerInfo\Resources\Memory $memory */
+/** @var \OCA\ServerInfoHetzner\Resources\Memory $memory */
 $memory = $_['memory'];
-/** @var \OCA\ServerInfo\Resources\Disk[] $disks */
+/** @var \OCA\ServerInfoHetzner\Resources\Disk[] $disks */
 $disks = $_['diskinfo'];
 ?>
 
@@ -210,7 +210,7 @@ $disks = $_['diskinfo'];
 				</p>
 				<p>
 					<?php p($l->t('To use an access token, please generate one then set it using the following command').':'); ?>
-					<div><i>occ config:app:set serverinfo token --value yourtoken</i></div>
+					<div><i>occ config:app:set serverinfo_hetzner token --value yourtoken</i></div>
 				</p>
 				<p>
 					<?php p($l->t('Then pass the token with the "NC-Token" header when querying the above URL.')); ?>

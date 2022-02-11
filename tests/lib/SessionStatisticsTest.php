@@ -23,9 +23,9 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo\Tests;
+namespace OCA\ServerInfoHetzner\Tests;
 
-use OCA\ServerInfo\SessionStatistics;
+use OCA\ServerInfoHetzner\SessionStatistics;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IDBConnection;
 use Test\TestCase;
@@ -34,7 +34,7 @@ use Test\TestCase;
  * Class SessionStatisticsTest
  *
  * @group DB
- * @package OCA\ServerInfo\Tests
+ * @package OCA\ServerInfoHetzner\Tests
  */
 class SessionStatisticsTest extends TestCase {
 

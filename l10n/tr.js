@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "İşlemci bilgileri alınamadı",
     "Load average: {cpu} (last minute)" : "Ortalama yük: {cpu} (son bir dakika)",

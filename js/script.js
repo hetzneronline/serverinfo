@@ -96,13 +96,13 @@
 				type: 'bar',
 				data: {
 					labels: [
-						t('serverinfo', 'Users'),
-						t('serverinfo', 'Groups'),
-						t('serverinfo', 'Links'),
-						t('serverinfo', 'Emails'),
-						t('serverinfo', 'Federated sent'),
-						t('serverinfo', 'Federated received'),
-						t('serverinfo', 'Talk conversations'),
+						t('serverinfo_hetzner', 'Users'),
+						t('serverinfo_hetzner', 'Groups'),
+						t('serverinfo_hetzner', 'Links'),
+						t('serverinfo_hetzner', 'Emails'),
+						t('serverinfo_hetzner', 'Federated sent'),
+						t('serverinfo_hetzner', 'Federated received'),
+						t('serverinfo_hetzner', 'Talk conversations'),
 					],
 					datasets: [{
 						label: " ",
@@ -162,9 +162,9 @@
 				type: 'line',
 				data: {
 					labels: [
-						t('serverinfo', '24 hours'),
-						t('serverinfo', '1 hour'),
-						t('serverinfo', '5 mins')
+						t('serverinfo_hetzner', '24 hours'),
+						t('serverinfo_hetzner', '1 hour'),
+						t('serverinfo_hetzner', '5 mins')
 					],
 					datasets: [{
 						label: " ",
@@ -257,7 +257,7 @@
 		var interval = 1000;  // 1000 = 1 second, 3000 = 3 seconds
 		function doAjax() {
 			$.ajax({
-				url: OC.linkToOCS('apps/serverinfo/api/v1/', 2) + 'basicdata?format=json',
+				url: OC.linkToOCS('apps/serverinfo_hetzner/api/v1/', 2) + 'basicdata?format=json',
 				method: "GET",
 				success: function (response) {
 					var data = response.ocs.data;

@@ -22,16 +22,16 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Tests;
+namespace OCA\ServerInfoHetzner\Tests;
 
-use OCA\ServerInfo\Controller\ApiController;
-use OCA\ServerInfo\DatabaseStatistics;
-use OCA\ServerInfo\Os;
-use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\SessionStatistics;
-use OCA\ServerInfo\ShareStatistics;
-use OCA\ServerInfo\StorageStatistics;
-use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfoHetzner\Controller\ApiController;
+use OCA\ServerInfoHetzner\DatabaseStatistics;
+use OCA\ServerInfoHetzner\Os;
+use OCA\ServerInfoHetzner\PhpStatistics;
+use OCA\ServerInfoHetzner\SessionStatistics;
+use OCA\ServerInfoHetzner\ShareStatistics;
+use OCA\ServerInfoHetzner\StorageStatistics;
+use OCA\ServerInfoHetzner\SystemStatistics;
 use OCP\AppFramework\Http;
 use OCP\IConfig;
 use OCP\IGroupManager;
@@ -87,7 +87,7 @@ class ApiControllerTest extends \Test\TestCase {
 
 	private function getController($userSession) {
 		return new ApiController(
-			'serverinfo',
+			'serverinfo_hetzner',
 			$this->request,
 			$this->config,
 			$this->groupManager,
@@ -158,7 +158,7 @@ class ApiControllerTest extends \Test\TestCase {
 
 		$this->config->expects($this->once())
 		   ->method('getAppValue')
-		   ->with('serverinfo', 'token', null)
+		   ->with('serverinfo_hetzner', 'token', null)
 		   ->willReturn('megatoken');
 		$response = $this->getController(null)->info();
 
@@ -174,7 +174,7 @@ class ApiControllerTest extends \Test\TestCase {
 
 		$this->config->expects($this->once())
 		   ->method('getAppValue')
-		   ->with('serverinfo', 'token', null)
+		   ->with('serverinfo_hetzner', 'token', null)
 		   ->willReturn('megatoken');
 		$response = $this->getController(null)->info();
 
@@ -189,7 +189,7 @@ class ApiControllerTest extends \Test\TestCase {
 
 		$this->config->expects($this->once())
 		   ->method('getAppValue')
-		   ->with('serverinfo', 'token', null)
+		   ->with('serverinfo_hetzner', 'token', null)
 		   ->willReturn('megatoken');
 		$response = $this->getController(null)->info();
 

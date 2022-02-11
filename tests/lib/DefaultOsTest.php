@@ -24,18 +24,18 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Tests;
+namespace OCA\ServerInfoHetzner\Tests;
 
-use OCA\ServerInfo\OperatingSystems\DefaultOs;
-use OCA\ServerInfo\Resources\Disk;
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\OperatingSystems\DefaultOs;
+use OCA\ServerInfoHetzner\Resources\Disk;
+use OCA\ServerInfoHetzner\Resources\Memory;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
 
 /**
  * Class DefaultOsTest
  *
- * @package OCA\ServerInfo\Tests
+ * @package OCA\ServerInfoHetzner\Tests
  */
 class DefaultOsTest extends TestCase {
 

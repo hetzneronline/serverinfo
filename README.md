@@ -22,7 +22,7 @@ instance in XML or JSON format, by using the following URL. If you want to
 get the information returned in JSON format, you have to append **`?format=json`**
 to the URL.
 ```
-https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
+https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo_hetzner/api/v1/info
 ```
 
 ### Example XML output:
@@ -110,12 +110,12 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo/api/v1/info
 
 Since collecting storage statistics might take time and cause slow downs, they are updated in the background. A background job runs once every three hours to update the number of storages and files. The interval can be overridden per app settings (the value is specified in seconds):
 
-``php occ config:app:set --value=3600 serverinfo job_interval_storage_stats``
+``php occ config:app:set --value=3600 serverinfo_hetzner job_interval_storage_stats``
 
 It is also possible to trigger the update manually per occ call. With verbose mode enabled, the current values are being printed.
 
 ```
-php occ serverinfo:update-storage-statistics -v --output=json_pretty
+php occ serverinfo_hetzner:update-storage-statistics -v --output=json_pretty
 {
     "num_users": 80,
     "num_files": 3934,

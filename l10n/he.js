@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "פרטי המעבד לא זמינים",
     "Users" : "משתמשים",

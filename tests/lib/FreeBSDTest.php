@@ -24,17 +24,17 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Tests;
+namespace OCA\ServerInfoHetzner\Tests;
 
-use OCA\ServerInfo\OperatingSystems\FreeBSD;
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\OperatingSystems\FreeBSD;
+use OCA\ServerInfoHetzner\Resources\Memory;
 use PHPUnit\Framework\MockObject\MockObject;
 use Test\TestCase;
 
 /**
  * Class FreeBSDTest
  *
- * @package OCA\ServerInfo\Tests
+ * @package OCA\ServerInfoHetzner\Tests
  */
 class FreeBSDTest extends TestCase {
 
