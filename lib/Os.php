@@ -21,12 +21,12 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
-use OCA\ServerInfo\OperatingSystems\DefaultOs;
-use OCA\ServerInfo\OperatingSystems\FreeBSD;
-use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\OperatingSystems\DefaultOs;
+use OCA\ServerInfoHetzner\OperatingSystems\FreeBSD;
+use OCA\ServerInfoHetzner\OperatingSystems\IOperatingSystem;
+use OCA\ServerInfoHetzner\Resources\Memory;
 
 class Os implements IOperatingSystem {
 

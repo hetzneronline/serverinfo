@@ -21,9 +21,9 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\OperatingSystems;
+namespace OCA\ServerInfoHetzner\OperatingSystems;
 
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\Resources\Memory;
 
 class DefaultOs implements IOperatingSystem {
 

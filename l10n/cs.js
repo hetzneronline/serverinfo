@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "Informace o procesoru nejsou k dispozici",
     "Load average: {cpu} (last minute)" : "Průměrné vytížení: {cpu} (za uplynulou minutu)",

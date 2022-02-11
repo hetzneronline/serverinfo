@@ -23,7 +23,7 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
 use OCP\IConfig;
 use OCP\IDBConnection;
@@ -76,7 +76,7 @@ class StorageStatistics {
 	}
 
 	protected function getCountOf(string $table): int {
-		return (int)$this->config->getAppValue('serverinfo', 'cached_count_' . $table, '0');
+		return (int)$this->config->getAppValue('serverinfo_hetzner', 'cached_count_' . $table, '0');
 	}
 
 	public function updateStorageCounts(): void {
@@ -101,8 +101,8 @@ class StorageStatistics {
 		}
 		$storageResult->closeCursor();
 
-		$this->config->setAppValue('serverinfo', 'cached_count_filecache' , (string)$fileCount);
-		$this->config->setAppValue('serverinfo', 'cached_count_storages', (string)$storageCount);
+		$this->config->setAppValue('serverinfo_hetzner', 'cached_count_filecache' , (string)$fileCount);
+		$this->config->setAppValue('serverinfo_hetzner', 'cached_count_storages', (string)$storageCount);
 	}
 
 	/**

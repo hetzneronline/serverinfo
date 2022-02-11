@@ -24,10 +24,10 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Commands;
+namespace OCA\ServerInfoHetzner\Commands;
 
 use OC\Core\Command\Base;
-use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfoHetzner\StorageStatistics;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -43,7 +43,7 @@ class UpdateStorageStats extends Base {
 
 	public function configure(): void {
 		parent::configure();
-		$this->setName('serverinfo:update-storage-statistics')
+		$this->setName('serverinfo_hetzner:update-storage-statistics')
 			->setDescription('Triggers an update of the counts related to storages used in serverinfo');
 	}
 

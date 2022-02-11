@@ -23,7 +23,7 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
 use Doctrine\DBAL\DBALException;
 use OCP\IConfig;

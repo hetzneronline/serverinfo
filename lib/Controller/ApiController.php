@@ -22,15 +22,15 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Controller;
+namespace OCA\ServerInfoHetzner\Controller;
 
-use OCA\ServerInfo\DatabaseStatistics;
-use OCA\ServerInfo\Os;
-use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\SessionStatistics;
-use OCA\ServerInfo\ShareStatistics;
-use OCA\ServerInfo\StorageStatistics;
-use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfoHetzner\DatabaseStatistics;
+use OCA\ServerInfoHetzner\Os;
+use OCA\ServerInfoHetzner\PhpStatistics;
+use OCA\ServerInfoHetzner\SessionStatistics;
+use OCA\ServerInfoHetzner\ShareStatistics;
+use OCA\ServerInfoHetzner\StorageStatistics;
+use OCA\ServerInfoHetzner\SystemStatistics;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\OCSController;
@@ -122,7 +122,17 @@ class ApiController extends OCSController {
 		// check for monitoring privilege
 		$token = $this->request->getHeader('NC-Token');
 		if (!empty($token)) {
-			$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
+			$storedToken = $this->config->getAppValue('serverinfo_hetzner', 'token', null);
+			if (null === $storedToken) {
+				// fallback to old token (required for drop-in replacement)
+				$storedToken = $this->config->getAppValue('serverinfo', 'token', null);
+			}
+
+			// If no token is set deny access
+			if (null === $storedToken) {
+				return false;
+			}
+
 			if (hash_equals($storedToken, $token)) {
 				return true;
 			}
@@ -146,7 +156,7 @@ class ApiController extends OCSController {
 	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 * @PublicPage
-	 * @BruteForceProtection(action=serverinfo)
+	 * @BruteForceProtection(action=serverinfo_hetzner)
 	 *
 	 * @return DataResponse
 	 */

@@ -22,12 +22,12 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Controller;
+namespace OCA\ServerInfoHetzner\Controller;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
-use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfoHetzner\SystemStatistics;
 
 class PageController extends Controller {
 
