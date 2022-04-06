@@ -26,10 +26,6 @@ namespace OCA\ServerInfoHetzner\OperatingSystems;
 use OCA\ServerInfoHetzner\Resources\Memory;
 
 class DefaultOs implements IOperatingSystem {
-
-	/**
-	 * @return bool
-	 */
 	public function supported(): bool {
 		return true;
 	}
@@ -42,9 +38,6 @@ class DefaultOs implements IOperatingSystem {
 		return 'N/A';
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getTime(): string {
 		return date(\DateTimeInterface::RFC7231);
 	}
@@ -53,9 +46,6 @@ class DefaultOs implements IOperatingSystem {
 		return -1;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = 'N/A';
@@ -64,14 +54,11 @@ class DefaultOs implements IOperatingSystem {
 		return $result;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInterfaces(): array {
 		return [];
 	}
 
 	public function getDiskInfo(): array {
-		return [];
-	}
+        return [];
+    }
 }

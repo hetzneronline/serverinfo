@@ -40,54 +40,21 @@ use OCP\IRequest;
 use OCP\IUserSession;
 
 class ApiController extends OCSController {
-
-	/** @var Os */
-	private $os;
-
-	/** @var IConfig */
-	private $config;
-
-	/** @var IGroupManager */
-	private $groupManager;
-
-	/** @var IUserSession */
-	private $userSession;
-
-	/** @var SystemStatistics */
-	private $systemStatistics;
-
-	/** @var StorageStatistics */
-	private $storageStatistics;
-
-	/** @var PhpStatistics */
-	private $phpStatistics;
-
-	/** @var DatabaseStatistics  */
-	private $databaseStatistics;
-
-	/** @var ShareStatistics */
-	private $shareStatistics;
-
-	/** @var SessionStatistics */
-	private $sessionStatistics;
+	private Os $os;
+	private IConfig $config;
+	private IGroupManager $groupManager;
+	private ?IUserSession $userSession;
+	private SystemStatistics $systemStatistics;
+	private StorageStatistics $storageStatistics;
+	private PhpStatistics $phpStatistics;
+	private DatabaseStatistics $databaseStatistics;
+	private ShareStatistics $shareStatistics;
+	private SessionStatistics $sessionStatistics;
 
 	/**
 	 * ApiController constructor.
-	 *
-	 * @param string $appName
-	 * @param IRequest $request
-	 * @param IConfig $config
-	 * @param IGroupManager $groupManager
-	 * @param IUserSession $userSession
-	 * @param Os $os
-	 * @param SystemStatistics $systemStatistics
-	 * @param StorageStatistics $storageStatistics
-	 * @param PhpStatistics $phpStatistics
-	 * @param DatabaseStatistics $databaseStatistics
-	 * @param ShareStatistics $shareStatistics
-	 * @param SessionStatistics $sessionStatistics
 	 */
-	public function __construct($appName,
+	public function __construct(string $appName,
 								IRequest $request,
 								IConfig $config,
 								IGroupManager $groupManager,
@@ -101,22 +68,20 @@ class ApiController extends OCSController {
 								SessionStatistics $sessionStatistics) {
 		parent::__construct($appName, $request);
 
-		$this->config             = $config;
-		$this->groupManager       = $groupManager;
-		$this->userSession        = $userSession;
-		$this->os                 = $os;
-		$this->systemStatistics   = $systemStatistics;
-		$this->storageStatistics  = $storageStatistics;
-		$this->phpStatistics      = $phpStatistics;
+		$this->config = $config;
+		$this->groupManager = $groupManager;
+		$this->userSession = $userSession;
+		$this->os = $os;
+		$this->systemStatistics = $systemStatistics;
+		$this->storageStatistics = $storageStatistics;
+		$this->phpStatistics = $phpStatistics;
 		$this->databaseStatistics = $databaseStatistics;
-		$this->shareStatistics    = $shareStatistics;
-		$this->sessionStatistics  = $sessionStatistics;
+		$this->shareStatistics = $shareStatistics;
+		$this->sessionStatistics = $sessionStatistics;
 	}
 
 	/**
 	 * Check if authorized to view serverinfo API.
-	 *
-	 * @return DataResponse
 	 */
 	private function checkAuthorized(): bool {
 		// check for monitoring privilege
@@ -157,8 +122,6 @@ class ApiController extends OCSController {
 	 * @NoAdminRequired
 	 * @PublicPage
 	 * @BruteForceProtection(action=serverinfo_hetzner)
-	 *
-	 * @return DataResponse
 	 */
 	public function info(): DataResponse {
 		if (!$this->checkAuthorized()) {
@@ -169,25 +132,22 @@ class ApiController extends OCSController {
 		}
 		return new DataResponse([
 			'nextcloud' => [
-				'system'  => $this->systemStatistics->getSystemStatistics(),
+				'system' => $this->systemStatistics->getSystemStatistics(),
 				'storage' => $this->storageStatistics->getStorageStatistics(),
-				'shares'  => $this->shareStatistics->getShareStatistics()
+				'shares' => $this->shareStatistics->getShareStatistics()
 			],
 			'server' => [
 				'webserver' => $this->getWebserver(),
-				'php'       => $this->phpStatistics->getPhpStatistics(),
-				'database'  => $this->databaseStatistics->getDatabaseStatistics()
+				'php' => $this->phpStatistics->getPhpStatistics(),
+				'database' => $this->databaseStatistics->getDatabaseStatistics()
 			],
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics()
 		]);
 	}
 
-	/**
-	 * @return DataResponse
-	 */
 	public function BasicData(): DataResponse {
-		$servertime  = $this->os->getTime();
-		$uptime      = $this->formatUptime($this->os->getUptime());
+		$servertime = $this->os->getTime();
+		$uptime = $this->formatUptime($this->os->getUptime());
 
 		return new DataResponse([
 			'servertime' => $servertime,
@@ -195,18 +155,13 @@ class ApiController extends OCSController {
 		]);
 	}
 
-	/**
-	 * @return DataResponse
-	 */
 	public function DiskData(): DataResponse {
 		$result = $this->os->getDiskData();
 		return new DataResponse($result);
 	}
 
 	/**
-	 * get webserver
-	 *
-	 * @return string
+	 * Get webserver information
 	 */
 	private function getWebserver(): string {
 		if (isset($_SERVER['SERVER_SOFTWARE'])) {
@@ -219,9 +174,6 @@ class ApiController extends OCSController {
 
 	/**
 	 * Return the uptime of the system as human readable value
-	 *
-	 * @param int $uptime
-	 * @return string
 	 */
 	private function formatUptime(int $uptime): string {
 		if ($uptime === -1) {

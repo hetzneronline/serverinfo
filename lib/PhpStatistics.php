@@ -33,13 +33,8 @@ use bantu\IniGetWrapper\IniGetWrapper;
  * @package OCA\Survey_Client\Categories
  */
 class PhpStatistics {
+	protected IniGetWrapper $phpIni;
 
-	/** @var IniGetWrapper */
-	protected $phpIni;
-
-	/**
-	 * @param IniGetWrapper $phpIni
-	 */
 	public function __construct(IniGetWrapper $phpIni) {
 		$this->phpIni = $phpIni;
 	}
@@ -52,6 +47,7 @@ class PhpStatistics {
 			'upload_max_filesize' => $this->phpIni->getBytes('upload_max_filesize'),
 			'opcache' => $this->getOPcacheStatus(),
 			'apcu' => $this->getAPCuStatus(),
+			'extensions' => $this->getLoadedPhpExtensions(),
 		];
 	}
 
@@ -68,7 +64,7 @@ class PhpStatistics {
 		}
 
 		// get status information about the cache
-		$status = opcache_get_status(false);
+		$status = (function_exists('opcache_get_status')) ? opcache_get_status(false) : false;
 
 		if ($status === false) {
 			// no array, returning back empty array to prevent any errors on JS side.
@@ -111,5 +107,15 @@ class PhpStatistics {
 			'cache' => $cacheInfo,
 			'sma' => $smaInfo,
 		];
+	}
+
+	/**
+	 * Get all loaded php extensions
+	 *
+	 * @return string as csv list of loaded extensions
+	 */
+	protected function getLoadedPhpExtensions(): string {
+		$extensions = (function_exists('get_loaded_extensions') ? get_loaded_extensions() : ['Unable to list extensions']);
+		return implode(', ', $extensions);
 	}
 }

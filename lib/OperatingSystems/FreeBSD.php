@@ -26,16 +26,7 @@ namespace OCA\ServerInfoHetzner\OperatingSystems;
 use OCA\ServerInfoHetzner\Resources\Disk;
 use OCA\ServerInfoHetzner\Resources\Memory;
 
-/**
- * Class FreeBSD
- *
- * @package OCA\ServerInfoHetzner\OperatingSystems
- */
 class FreeBSD implements IOperatingSystem {
-
-	/**
-	 * @return bool
-	 */
 	public function supported(): bool {
 		return false;
 	}
@@ -54,8 +45,8 @@ class FreeBSD implements IOperatingSystem {
 
 		$result = preg_match_all($pattern, $swapinfo, $matches);
 		if ($result === 1) {
-			$data->setSwapTotal((int)($matches['Avail'][0] / 1024));
-			$data->setSwapFree(($data->getSwapTotal() - (int)($matches['Used'][0] / 1024)));
+			$data->setSwapTotal((int)((int)$matches['Avail'][0] / 1024));
+			$data->setSwapFree(($data->getSwapTotal() - (int)((int)$matches['Used'][0] / 1024)));
 		}
 
 		unset($matches, $result);
@@ -66,7 +57,7 @@ class FreeBSD implements IOperatingSystem {
 			$meminfo = '';
 		}
 
-		$lines = explode("\n", $meminfo);
+		$lines = array_map('intval', explode("\n", $meminfo));
 		if (count($lines) > 4) {
 			$data->setMemTotal((int)($lines[0] / 1024 / 1024));
 			$data->setMemAvailable((int)(($lines[1] * ($lines[2] + $lines[3] + $lines[4])) / 1024 / 1024));
@@ -84,7 +75,7 @@ class FreeBSD implements IOperatingSystem {
 			$model = $this->executeCommand('/sbin/sysctl -n hw.model');
 			$cores = $this->executeCommand('/sbin/sysctl -n kern.smp.cpus');
 
-			if ($cores === 1) {
+			if ((int)$cores === 1) {
 				$data = $model . ' (1 core)';
 			} else {
 				$data = $model . ' (' . $cores . ' cores)';
@@ -95,18 +86,12 @@ class FreeBSD implements IOperatingSystem {
 		return $data;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getTime(): string {
-		$time = '';
-
 		try {
-			$time = $this->executeCommand('date');
+			return $this->executeCommand('date');
 		} catch (\RuntimeException $e) {
-			return $time;
+			return '';
 		}
-		return $time;
 	}
 
 	public function getUptime(): int {
@@ -123,9 +108,6 @@ class FreeBSD implements IOperatingSystem {
 		return $uptime;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInfo(): array {
 		$result = [];
 		$result['hostname'] = \gethostname();
@@ -136,17 +118,16 @@ class FreeBSD implements IOperatingSystem {
 			$alldns = implode(' ', $matches[0]);
 			$result['dns'] = $alldns;
 			$netstat = $this->executeCommand('netstat -rn');
-			preg_match("/(?<=^default).*\b\d/m", $netstat, $gw);
-			$result['gateway'] = $gw[0];
+			preg_match_all("/(?<=^default)\s*[0-9a-fA-f\.:]+/m", $netstat, $gw);
+			if (count($gw[0]) > 0) {
+				$result['gateway'] = implode(", ", array_map("trim", $gw[0]));
+			}
 		} catch (\RuntimeException $e) {
 			return $result;
 		}
 		return $result;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getNetworkInterfaces(): array {
 		$result = [];
 
@@ -159,7 +140,7 @@ class FreeBSD implements IOperatingSystem {
 		preg_match_all("/^(?<=(?!\t)).*(?=:)/m", $ifconfig, $interfaces);
 
 		foreach ($interfaces[0] as $interface) {
-			$iface              = [];
+			$iface = [];
 			$iface['interface'] = $interface;
 
 			try {
@@ -170,8 +151,8 @@ class FreeBSD implements IOperatingSystem {
 
 			preg_match_all("/(?<=inet ).\S*/m", $intface, $ipv4);
 			preg_match_all("/(?<=inet6 )((.*(?=%))|(.\S*))/m", $intface, $ipv6);
-			$iface['ipv4']      = implode(' ', $ipv4[0]);
-			$iface['ipv6']      = implode(' ', $ipv6[0]);
+			$iface['ipv4'] = implode(' ', $ipv4[0]);
+			$iface['ipv6'] = implode(' ', $ipv6[0]);
 
 			if ($iface['interface'] !== 'lo0') {
 				preg_match_all("/(?<=ether ).*/m", $intface, $mac);
@@ -180,7 +161,7 @@ class FreeBSD implements IOperatingSystem {
 				preg_match("/(?<=\<).*(?=-)/m", $intface, $duplex);
 
 				$iface['mac'] = implode(' ', $mac[0]);
-				$iface['speed']  = $speed[0];
+				$iface['speed'] = $speed[0];
 
 				if (isset($status[0])) {
 					$iface['status'] = $status[0];
@@ -206,7 +187,7 @@ class FreeBSD implements IOperatingSystem {
 				}
 			} else {
 				$iface['status'] = 'active';
-				$iface['speed']  = 'unknown';
+				$iface['speed'] = 'unknown';
 				$iface['duplex'] = '';
 			}
 			$result[] = $iface;
@@ -240,8 +221,8 @@ class FreeBSD implements IOperatingSystem {
 			$disk = new Disk();
 			$disk->setDevice($filesystem);
 			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)($matches['Used'][$i] / 1024));
-			$disk->setAvailable((int)($matches['Available'][$i] / 1024));
+			$disk->setUsed((int)((int)$matches['Used'][$i] / 1024));
+			$disk->setAvailable((int)((int)$matches['Available'][$i] / 1024));
 			$disk->setPercent($matches['Capacity'][$i]);
 			$disk->setMount($matches['Mounted'][$i]);
 
@@ -253,7 +234,7 @@ class FreeBSD implements IOperatingSystem {
 
 	protected function executeCommand(string $command): string {
 		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '') {
+		if ($output === null || $output === '' || $output === false) {
 			throw new \RuntimeException('No output for command: "' . $command . '"');
 		}
 		return $output;

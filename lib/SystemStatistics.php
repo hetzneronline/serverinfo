@@ -25,52 +25,35 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfoHetzner;
 
-use OC\Files\View;
-use OC\Installer;
+use OCP\App\IAppManager;
 use OCP\Files\FileInfo;
 use OCP\IConfig;
-use OCP\App\IAppManager;
-use bantu\IniGetWrapper\IniGetWrapper;
+use OC\Files\View;
+use OC\Installer;
 
 class SystemStatistics {
+	private IConfig $config;
+	private View $view;
+	private IAppManager $appManager;
+	private Installer $installer;
+	protected Os $os;
 
-	/** @var IConfig */
-	private $config;
-	/** @var View view on data/ */
-	private $view;
-	/** @var IAppManager */
-	private $appManager;
-	/** @var Installer */
-	private $installer;
-	/** @var IniGetWrapper */
-	protected $phpIni;
-
-	/**
-	 * SystemStatistics constructor.
-	 *
-	 * @param IConfig $config
-	 * @param IAppManager $appManager
-	 * @param Installer $installer
-	 * @param IniGetWrapper $phpIni
-	 * @throws \Exception
-	 */
-	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, IniGetWrapper $phpIni) {
+	public function __construct(IConfig $config, IAppManager $appManager, Installer $installer, Os $os) {
 		$this->config = $config;
 		$this->view = new View();
 		$this->appManager = $appManager;
 		$this->installer = $installer;
-		$this->phpIni = $phpIni;
+		$this->os = $os;
 	}
 
 	/**
 	 * Get statistics about the system
 	 *
-	 * @return array with with of data
 	 * @throws \OCP\Files\InvalidPathException
 	 */
 	public function getSystemStatistics(): array {
 		$processorUsage = $this->getProcessorUsage();
-		$memoryUsage = $this->getMemoryUsage();
+		$memoryUsage = $this->os->getMemory();
 		return [
 			'version' => $this->config->getSystemValue('version'),
 			'theme' => $this->config->getSystemValue('theme', 'none'),
@@ -83,21 +66,12 @@ class SystemStatistics {
 			'debug' => $this->config->getSystemValue('debug', false) ? 'yes' : 'no',
 			'freespace' => $this->getFreeSpace(),
 			'cpuload' => $processorUsage['loadavg'],
-			'mem_total' => $memoryUsage['mem_total'],
-			'mem_free' => $memoryUsage['mem_free'],
-			'swap_total' => $memoryUsage['swap_total'],
-			'swap_free' => $memoryUsage['swap_free'],
+			'mem_total' => $memoryUsage->getMemTotal() * 1024,
+			'mem_free' => $memoryUsage->getMemAvailable() * 1024,
+			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
+			'swap_free' => $memoryUsage->getSwapFree() * 1024,
 			'apps' => $this->getAppsInfo()
 		];
-	}
-
-	/**
-	 * Get available and free memory including both RAM and Swap
-	 *
-	 * @return array with the two values 'mem_free' and 'mem_total'
-	 */
-	protected function getMemoryUsage(): array {
-		return ['mem_free' => 'N/A', 'mem_total' => 'N/A', 'swap_free' => 'N/A', 'swap_total' => 'N/A'];
 	}
 
 	/**
@@ -133,26 +107,9 @@ class SystemStatistics {
 	}
 
 	/**
-	 * Checks if a function is available. Borrowed from
-	 * https://github.com/nextcloud/server/blob/2e36069e24406455ad3f3998aa25e2a949d1402a/lib/private/legacy/helper.php#L475
-	 *
-	 * @param string $function_name
-	 * @return bool
-	 */
-	public function is_function_enabled(string $function_name): bool {
-		if (!function_exists($function_name)) {
-			return false;
-		}
-		if ($this->phpIni->listContains('disable_functions', $function_name)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
 	 * Get current CPU load average
 	 *
-	 * @return array load average with three values, 1/5/15 minutes average.
+	 * @return array{loadavg: array|string} load average with three values, 1/5/15 minutes average.
 	 */
 	protected function getProcessorUsage(): array {
 		return [
