@@ -28,16 +28,6 @@ script('serverinfo_hetzner', 'Chart.min');
 
 style('serverinfo_hetzner', 'style');
 
-function FormatMegabytes(int $byte): string {
-	$unim = ['MB', 'GB', 'TB', 'PB'];
-	$count = 0;
-	while ($byte >= 1024) {
-		$count++;
-		$byte /= 1024;
-	}
-	return number_format($byte, 2, '.', '.') . ' ' . $unim[$count];
-}
-
 /** @var \OCA\ServerInfoHetzner\Resources\Memory $memory */
 $memory = $_['memory'];
 /** @var \OCA\ServerInfoHetzner\Resources\Disk[] $disks */
@@ -76,10 +66,10 @@ $disks = $_['diskinfo'];
 			<?php p($l->t('You will get a notification once one of your disks is nearly full.')); ?>
 		</div>
 
-		<p><?php p($l->t('Files').':'); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
-		<p><?php p($l->t('Storages').':'); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
+		<p><?php p($l->t('Files:')); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
+		<p><?php p($l->t('Storages:')); ?> <strong id="numFilesStorages"><?php p($_['storage']['num_storages']); ?></strong></p>
 		<?php if ($_['system']['freespace'] !== null): ?>
-			<p><?php p($l->t('Free Space').':'); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong></p>
+			<p><?php p($l->t('Free Space:')); ?> <strong id="systemDiskFreeSpace"><?php p($_['system']['freespace']); ?></strong></p>
 		<?php endif; ?>
 	</div>
 
@@ -105,7 +95,7 @@ $disks = $_['diskinfo'];
 							></canvas>
 						</div>
 						<p>
-							<?php p($l->t('Total users').':'); ?>
+							<?php p($l->t('Total users:')); ?>
 							<em id="numUsersStorage"><?php p($_['storage']['num_users']); ?></em>
 						</p>
 					</div>
@@ -147,24 +137,24 @@ $disks = $_['diskinfo'];
 				<div class="infobox">
 					<div class="phpinfo-wrapper">
 						<p>
-							<?php p($l->t('Version').':'); ?>
+							<?php p($l->t('Version:')); ?>
 							<em id="phpVersion"><?php p($_['php']['version']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Memory limit').':'); ?>
+							<?php p($l->t('Memory limit:')); ?>
 							<em id="phpMemLimit"><?php p($_['php']['memory_limit']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Max execution time').':'); ?>
+							<?php p($l->t('Max execution time:')); ?>
 							<em id="phpMaxExecTime"><?php p($_['php']['max_execution_time']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Upload max size').' (WebDAV):'); ?>
+							<?php p($l->t('Upload max size:').' (WebDAV):'); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
 						</p>
 						<p>
 							<?php p($l->t('Extensions:')); ?>
-							<em id="phpExtensions"><?php p($_['php']['extensions']); ?></em>
+							<em id="phpExtensions"><?php p($_['php']['extensions'] !== null ? implode(', ', $_['php']['extensions']) : $l->t('Unable to list extensions')); ?></em>
 						</p>
 					</div>
 				</div>
@@ -179,15 +169,15 @@ $disks = $_['diskinfo'];
 				<div class="infobox">
 					<div class="database-wrapper">
 						<p>
-							<?php p($l->t('Type').':'); ?>
+							<?php p($l->t('Type:')); ?>
 							<em id="databaseType"><?php p($_['database']['type']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Version').':'); ?>
+							<?php p($l->t('Version:')); ?>
 							<em id="databaseVersion"><?php p($_['database']['version']); ?></em>
 						</p>
 						<p>
-							<?php p($l->t('Size').':'); ?>
+							<?php p($l->t('Size:')); ?>
 							<em id="databaseSize"><?php p($_['database']['size']); ?></em>
 						</p>
 					</div>
@@ -203,7 +193,7 @@ $disks = $_['diskinfo'];
 				<!-- OCS ENDPOINT -->
 				<h2><?php p($l->t('External monitoring tool')); ?></h2>
 				<p>
-					<?php p($l->t('You can connect an external monitoring tool by using this end point').':'); ?>
+					<?php p($l->t('You can connect an external monitoring tool by using this end point:')); ?>
 				</p>
 				<div class="monitoring-wrapper">
 					<input type="text" readonly="readonly" id="monitoring-endpoint-url" value="<?php echo p($_['ocs']); ?>"/>
@@ -213,7 +203,7 @@ $disks = $_['diskinfo'];
 					<?php p($l->t('Appending "?format=json" at the end of the URL gives you the result in JSON.')); ?>
 				</p>
 				<p>
-					<?php p($l->t('To use an access token, please generate one then set it using the following command').':'); ?>
+					<?php p($l->t('To use an access token, please generate one then set it using the following command:')); ?>
 					<div><i>occ config:app:set serverinfo_hetzner token --value yourtoken</i></div>
 				</p>
 				<p>
@@ -224,3 +214,4 @@ $disks = $_['diskinfo'];
 	</div>
 
 </div>
+
