@@ -21,10 +21,9 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\OperatingSystems;
+namespace OCA\ServerInfoHetzner\OperatingSystems;
 
-use OCA\ServerInfo\Resources\Disk;
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\Resources\Memory;
 
 class DefaultOs implements IOperatingSystem {
 	public function supported(): bool {
@@ -32,202 +31,34 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	public function getMemory(): Memory {
-		$data = new Memory();
-
-		try {
-			$meminfo = $this->readContent('/proc/meminfo');
-		} catch (\RuntimeException $e) {
-			return $data;
-		}
-
-		$matches = [];
-		$pattern = '/(?<Key>(?:MemTotal|MemFree|MemAvailable|SwapTotal|SwapFree)+):\s+(?<Value>\d+)\s+(?<Unit>\w{2})/';
-
-		$result = preg_match_all($pattern, $meminfo, $matches);
-		if ($result === 0 || $result === false) {
-			return $data;
-		}
-
-		foreach ($matches['Key'] as $i => $key) {
-			// Value is always in KB: https://github.com/torvalds/linux/blob/c70672d8d316ebd46ea447effadfe57ab7a30a50/fs/proc/meminfo.c#L58-L60
-			$value = (int)((int)$matches['Value'][$i] / 1024);
-
-			switch ($key) {
-				case 'MemTotal':
-					$data->setMemTotal($value);
-					break;
-				case 'MemFree':
-					$data->setMemFree($value);
-					break;
-				case 'MemAvailable':
-					$data->setMemAvailable($value);
-					break;
-				case 'SwapTotal':
-					$data->setSwapTotal($value);
-					break;
-				case 'SwapFree':
-					$data->setSwapFree($value);
-					break;
-			}
-		}
-
-		return $data;
+		return new Memory();
 	}
 
 	public function getCpuName(): string {
-		$data = 'Unknown Processor';
-
-		try {
-			$cpuinfo = $this->readContent('/proc/cpuinfo');
-		} catch (\RuntimeException $e) {
-			return $data;
-		}
-
-		$matches = [];
-		$pattern = '/model name\s:\s(.+)/';
-
-		$result = preg_match_all($pattern, $cpuinfo, $matches);
-		if ($result === 0 || $result === false) {
-			// For Raspberry Pi 4B
-			$pattern = '/Model\s+:\s(.+)/';
-			$result = preg_match_all($pattern, $cpuinfo, $matches);
-			if ($result === 0 || $result === false) {
-				return $data;
-			}
-		}
-
-		$model = $matches[1][0];
-
-		$pattern = '/processor\s+:\s(.+)/';
-
-		$result = preg_match_all($pattern, $cpuinfo, $matches);
-		$cores = count($matches[1]);
-
-		if ($cores === 1) {
-			$data = $model . ' (1 core)';
-		} else {
-			$data = $model . ' (' . $cores . ' cores)';
-		}
-
-		return $data;
+		return 'N/A';
 	}
 
 	public function getTime(): string {
-		return (string)shell_exec('date');
+		return date(\DateTimeInterface::RFC7231);
 	}
 
 	public function getUptime(): int {
-		$data = -1;
-
-		try {
-			$uptime = $this->readContent('/proc/uptime');
-		} catch (\RuntimeException $e) {
-			return $data;
-		}
-
-		[$uptimeInSeconds,] = array_map('intval', explode(' ', $uptime));
-
-		return $uptimeInSeconds;
+		return -1;
 	}
 
 	public function getNetworkInfo(): array {
 		$result = [];
-		$result['hostname'] = \gethostname();
-		$dns = shell_exec('cat /etc/resolv.conf |grep -i \'^nameserver\'|head -n1|cut -d \' \' -f2');
-		$result['dns'] = $dns;
-		$gw = shell_exec('ip route | awk \'/default/ { print $3 }\'');
-		$result['gateway'] = $gw;
+		$result['hostname'] = 'N/A';
+		$result['dns'] = 'N/A';
+		$result['gateway'] = 'N/A';
 		return $result;
 	}
 
 	public function getNetworkInterfaces(): array {
-		$interfaces = glob('/sys/class/net/*');
-		$result = [];
-
-		foreach ($interfaces as $interface) {
-			$iface = [];
-			$iface['interface'] = basename($interface);
-			$iface['mac'] = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "link/ether " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-			$iface['ipv4'] = shell_exec('ip addr show dev ' . $iface['interface'] . ' | grep "inet " | cut -d \' \' -f 6  | cut -f 1 -d \'/\'');
-			$iface['ipv6'] = shell_exec('ip -o -6 addr show ' . $iface['interface'] . ' | sed -e \'s/^.*inet6 \([^ ]\+\).*/\1/\'');
-			if ($iface['interface'] !== 'lo') {
-				$iface['status'] = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/operstate');
-				$iface['speed'] = (int)shell_exec('cat /sys/class/net/' . $iface['interface'] . '/speed');
-				if (isset($iface['speed']) && $iface['speed'] > 0) {
-					if ($iface['speed'] >= 1000) {
-						$iface['speed'] = $iface['speed'] / 1000 . ' Gbps';
-					} else {
-						$iface['speed'] = $iface['speed'] . ' Mbps';
-					}
-				} else {
-					$iface['speed'] = 'unknown';
-				}
-				$duplex = shell_exec('cat /sys/class/net/' . $iface['interface'] . '/duplex');
-				if (isset($duplex) && $duplex !== '') {
-					$iface['duplex'] = 'Duplex: ' . $duplex;
-				} else {
-					$iface['duplex'] = '';
-				}
-			} else {
-				$iface['status'] = 'up';
-				$iface['speed'] = 'unknown';
-				$iface['duplex'] = '';
-			}
-			$result[] = $iface;
-		}
-
-		return $result;
+		return [];
 	}
 
 	public function getDiskInfo(): array {
-		$data = [];
-
-		try {
-			$disks = $this->executeCommand('df -TPk');
-		} catch (\RuntimeException $e) {
-			return $data;
-		}
-
-		$matches = [];
-		$pattern = '/^(?<Filesystem>[\S]+)\s*(?<Type>[\S]+)\s*(?<Blocks>\d+)\s*(?<Used>\d+)\s*(?<Available>\d+)\s*(?<Capacity>\d+%)\s*(?<Mounted>[\w\/-]+)$/m';
-
-		$result = preg_match_all($pattern, $disks, $matches);
-		if ($result === 0 || $result === false) {
-			return $data;
-		}
-
-		foreach ($matches['Filesystem'] as $i => $filesystem) {
-			if (in_array($matches['Type'][$i], ['tmpfs', 'devtmpfs', 'squashfs', 'overlay'], false)) {
-				continue;
-			}
-
-			$disk = new Disk();
-			$disk->setDevice($filesystem);
-			$disk->setFs($matches['Type'][$i]);
-			$disk->setUsed((int)((int)$matches['Used'][$i] / 1024));
-			$disk->setAvailable((int)((int)$matches['Available'][$i] / 1024));
-			$disk->setPercent($matches['Capacity'][$i]);
-			$disk->setMount($matches['Mounted'][$i]);
-
-			$data[] = $disk;
-		}
-
-		return $data;
-	}
-
-	protected function readContent(string $filename): string {
-		$data = @file_get_contents($filename);
-		if ($data === false || $data === '') {
-			throw new \RuntimeException('Unable to read: "' . $filename . '"');
-		}
-		return $data;
-	}
-
-	protected function executeCommand(string $command): string {
-		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '') {
-			throw new \RuntimeException('No output for command: "' . $command . '"');
-		}
-		return $output;
-	}
+        return [];
+    }
 }

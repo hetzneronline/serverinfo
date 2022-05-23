@@ -23,7 +23,7 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
 use OCP\App\IAppManager;
 use OCP\Files\FileInfo;
@@ -112,18 +112,8 @@ class SystemStatistics {
 	 * @return array{loadavg: array|string} load average with three values, 1/5/15 minutes average.
 	 */
 	protected function getProcessorUsage(): array {
-		// get current system load average.
-		$loadavg = sys_getloadavg();
-
-		// check if we got any values back.
-		if ($loadavg === false || count($loadavg) !== 3) {
-			// either no array or too few array keys.
-			// returning back zeroes to prevent any errors on JS side.
-			$loadavg = 'N/A';
-		}
-
 		return [
-			'loadavg' => $loadavg
+			'loadavg' => 'N/A'
 		];
 	}
 

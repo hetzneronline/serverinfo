@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "Users" : "អ្នកប្រើ",
     "Groups" : "ក្រុ",

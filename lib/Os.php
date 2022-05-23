@@ -21,12 +21,12 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
-use OCA\ServerInfo\OperatingSystems\DefaultOs;
-use OCA\ServerInfo\OperatingSystems\FreeBSD;
-use OCA\ServerInfo\OperatingSystems\IOperatingSystem;
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\OperatingSystems\DefaultOs;
+use OCA\ServerInfoHetzner\OperatingSystems\FreeBSD;
+use OCA\ServerInfoHetzner\OperatingSystems\IOperatingSystem;
+use OCA\ServerInfoHetzner\Resources\Memory;
 
 class Os implements IOperatingSystem {
 	protected IOperatingSystem $backend;
@@ -48,14 +48,14 @@ class Os implements IOperatingSystem {
 	}
 
 	public function getHostname(): string {
-		return (string)gethostname();
+		return 'N/A';
 	}
 
 	/**
 	 * Get name of the operating system.
 	 */
 	public function getOSName(): string {
-		return PHP_OS . ' ' . php_uname('r') . ' ' . php_uname('m');
+		return 'N/A';
 	}
 
 	public function getMemory(): Memory {

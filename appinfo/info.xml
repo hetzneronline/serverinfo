@@ -1,30 +1,32 @@
 <?xml version="1.0"?>
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>serverinfo</id>
-    <name>Monitoring</name>
+    <id>serverinfo_hetzner</id>
+    <name>Monitoring (Hetzner Storage Share)</name>
     <summary>Monitoring app with useful server information</summary>
-    <description>Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc.</description>
+    <description>Provides useful server information, such as disk usage, number of users, etc. This is an adapted version for Hetzner Storage Shares.</description>
     <version>1.14.0</version>
     <licence>agpl</licence>
     <author>Bjoern Schiessle</author>
     <author>Ivan Sein Santiago</author>
     <author>Frank Karlitschek</author>
-    <namespace>ServerInfo</namespace>
+    <author>Hetzner Online GmbH</author>
+    <namespace>ServerInfoHetzner</namespace>
     <default_enable/>
     <category>monitoring</category>
-    <bugs>https://github.com/nextcloud/serverinfo/issues</bugs>
+    <bugs>https://konsoleh.your-server.de/support.php</bugs>
+    <website>https://github.com/hetzneronline/serverinfo</website>
     <dependencies>
 		<nextcloud min-version="24" max-version="24" />
     </dependencies>
 	<background-jobs>
-		<job>OCA\ServerInfo\Jobs\UpdateStorageStats</job>
+		<job>OCA\ServerInfoHetzner\Jobs\UpdateStorageStats</job>
 	</background-jobs>
 	<commands>
-		<command>OCA\ServerInfo\Commands\UpdateStorageStats</command>
+		<command>OCA\ServerInfoHetzner\Commands\UpdateStorageStats</command>
 	</commands>
     <settings>
-        <admin>OCA\ServerInfo\Settings\AdminSettings</admin>
-        <admin-section>OCA\ServerInfo\Settings\AdminSection</admin-section>
+        <admin>OCA\ServerInfoHetzner\Settings\AdminSettings</admin>
+        <admin-section>OCA\ServerInfoHetzner\Settings\AdminSection</admin-section>
     </settings>
 </info>

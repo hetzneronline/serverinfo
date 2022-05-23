@@ -23,7 +23,7 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Resources;
+namespace OCA\ServerInfoHetzner\Resources;
 
 class Disk {
 	private string $device = '';

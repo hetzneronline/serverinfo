@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "CPU情報が利用できません",
     "RAM info not available" : "RAM情報が利用不可",

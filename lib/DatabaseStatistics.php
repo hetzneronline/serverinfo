@@ -23,7 +23,7 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
 use OCP\IConfig;
 use OCP\IDBConnection;
@@ -156,7 +156,7 @@ class DatabaseStatistics {
 	 */
 	protected function cleanVersion(string $version): string {
 		$matches = [];
-		preg_match('/^(\d+)(\.\d+)(\.\d+)/', $version, $matches);
+		preg_match('/^(\d+)(\.\d+)/', $version, $matches);
 		if (isset($matches[0])) {
 			return $matches[0];
 		}
