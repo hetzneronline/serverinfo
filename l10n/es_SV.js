@@ -15,6 +15,7 @@ OC.L10N.register(
     "Press Ctrl-C to copy." : "Presiona Ctrl-C para copiar.",
     "System" : "Sistema",
     "Monitoring" : "Monitoreo",
+    "Temperature" : "Temperatura",
     "Size:" : "Tamaño:",
     "Files:" : "Archivos:",
     "Active users" : "Usuarios activos",
@@ -39,4 +40,4 @@ OC.L10N.register(
     "Version" : "Versión",
     "Type" : "Tipo"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=2; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
