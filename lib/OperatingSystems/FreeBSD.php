@@ -65,12 +65,4 @@ class FreeBSD implements IOperatingSystem {
 	public function getThermalZones(): array {
 		return [];
 	}
-
-	protected function executeCommand(string $command): string {
-		$output = @shell_exec(escapeshellcmd($command));
-		if ($output === null || $output === '' || $output === false) {
-			throw new \RuntimeException('No output for command: "' . $command . '"');
-		}
-		return $output;
-	}
 }
