@@ -61,4 +61,8 @@ class DefaultOs implements IOperatingSystem {
 	public function getDiskInfo(): array {
         return [];
     }
+
+	public function getThermalZones(): array {
+		return [];
+	}
 }
