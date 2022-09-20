@@ -19,6 +19,7 @@ OC.L10N.register(
     "Monitoring" : "Monitoreo",
     "Monitoring app with useful server information" : "Aplicación de monitoreo con información útil del servidor",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Provee información útil del servidor como carga del CPU, uso de RAM, uso de disco, número de usuarios, etc.",
+    "Temperature" : "Temperatura",
     "Size:" : "Tamaño:",
     "Files:" : "Archivos:",
     "Storages:" : "Almacenamiento:",
@@ -47,4 +48,4 @@ OC.L10N.register(
     "Version" : "Versión",
     "Type" : "Tipo"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

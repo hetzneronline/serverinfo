@@ -27,6 +27,7 @@ OC.L10N.register(
     "Monitoring app with useful server information" : "Applicazione di monitoraggio con informazioni utili sul server",
     "Provides useful server information, such as CPU load, RAM usage, disk usage, number of users, etc." : "Fornisce informazioni utili sul server, come carico della CPU, utilizzo della memoria, utilizzo del disco, numero di utenti, ecc.",
     "Unknown Processor" : "Processore sconosciuto",
+    "Temperature" : "Temperatura",
     "Load" : "Carico",
     "Memory" : "Memoria",
     "Disk" : "Disco",
@@ -88,4 +89,4 @@ OC.L10N.register(
     "You can connect an external monitoring tool by using this end point" : "Puoi collegare uno strumento di controllo esterno utilizzando questo terminatore",
     "To use an access token, please generate one then set it using the following command" : "Per usare un token di accesso, generane uno e poi impostalo con il comando seguente"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

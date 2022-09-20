@@ -39,7 +39,7 @@ $disks = $_['diskinfo'];
 	<!-- SERVER INFOS -->
 	<div class="section server-infos">
 		<div class="row">
-			<div class="col col-12">
+			<div class="col col-6 col-l-12">
 				<h2>
 					<img class="infoicon" src="<?php p(image_path('core', 'actions/screen.svg')); ?>">
 					<?php p($l->t('System')); ?>
