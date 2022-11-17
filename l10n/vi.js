@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "Không lấy được thông tin CPU",
     "Load average: {cpu} (last minute)" : "Tải trung bình:{cpu} (phút trước)",

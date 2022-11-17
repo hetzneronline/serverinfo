@@ -23,7 +23,7 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo;
+namespace OCA\ServerInfoHetzner;
 
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IDBConnection;
@@ -34,7 +34,7 @@ use OCP\IDBConnection;
  * get active users
  *
  * @group DB
- * @package OCA\ServerInfo
+ * @package OCA\ServerInfoHetzner
  */
 class SessionStatistics {
 	private const OFFSET_5MIN = 300;

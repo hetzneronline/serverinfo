@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "Informacija apie procesorių neprieinama",
     "Load average: {cpu} (last minute)" : "Apkrovos vidurkis: {cpu} (paskutinė minutė)",

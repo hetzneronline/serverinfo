@@ -23,7 +23,7 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo\Settings;
+namespace OCA\ServerInfoHetzner\Settings;
 
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -42,7 +42,7 @@ class AdminSection implements IIconSection {
 	 * returns the ID of the section. It is supposed to be a lower case string
 	 */
 	public function getID(): string {
-		return 'serverinfo';
+		return 'serverinfo_hetzner';
 	}
 
 	/**
@@ -68,6 +68,6 @@ class AdminSection implements IIconSection {
 	 * {@inheritdoc}
 	 */
 	public function getIcon(): string {
-		return $this->url->imagePath('serverinfo', 'app-dark.svg');
+		return $this->url->imagePath('serverinfo_hetzner', 'app-dark.svg');
 	}
 }

@@ -24,9 +24,9 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\Jobs;
+namespace OCA\ServerInfoHetzner\Jobs;
 
-use OCA\ServerInfo\StorageStatistics;
+use OCA\ServerInfoHetzner\StorageStatistics;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 use OCP\IConfig;
@@ -35,7 +35,7 @@ class UpdateStorageStats extends TimedJob {
 	private StorageStatistics $storageStatistics;
 
 	public function __construct(ITimeFactory $time, StorageStatistics $storageStatistics, IConfig $config) {
-		$this->setInterval((int)$config->getAppValue('serverinfo', 'job_interval_storage_stats', (string)(60 * 60 * 3)));
+		$this->setInterval((int)$config->getAppValue('serverinfo_hetzner', 'job_interval_storage_stats', (string)(60 * 60 * 3)));
 		parent::__construct($time);
 
 		$this->storageStatistics = $storageStatistics;

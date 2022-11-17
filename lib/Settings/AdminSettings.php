@@ -23,15 +23,15 @@ declare(strict_types=1);
  */
 
 
-namespace OCA\ServerInfo\Settings;
+namespace OCA\ServerInfoHetzner\Settings;
 
-use OCA\ServerInfo\DatabaseStatistics;
-use OCA\ServerInfo\Os;
-use OCA\ServerInfo\PhpStatistics;
-use OCA\ServerInfo\SessionStatistics;
-use OCA\ServerInfo\ShareStatistics;
-use OCA\ServerInfo\StorageStatistics;
-use OCA\ServerInfo\SystemStatistics;
+use OCA\ServerInfoHetzner\DatabaseStatistics;
+use OCA\ServerInfoHetzner\Os;
+use OCA\ServerInfoHetzner\PhpStatistics;
+use OCA\ServerInfoHetzner\SessionStatistics;
+use OCA\ServerInfoHetzner\ShareStatistics;
+use OCA\ServerInfoHetzner\StorageStatistics;
+use OCA\ServerInfoHetzner\SystemStatistics;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IL10N;
 use OCP\IURLGenerator;
@@ -70,7 +70,7 @@ class AdminSettings implements ISettings {
 	}
 
 	public function getForm(): TemplateResponse {
-		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo/api/v1/info');
+		$monitoringEndPoint = $this->urlGenerator->getAbsoluteURL('ocs/v2.php/apps/serverinfo_hetzner/api/v1/info');
 		$params = [
 			'hostname' => $this->os->getHostname(),
 			'osname' => $this->os->getOSName(),
@@ -89,14 +89,14 @@ class AdminSettings implements ISettings {
 			'thermalzones' => $this->os->getThermalZones()
 		];
 
-		return new TemplateResponse('serverinfo', 'settings-admin', $params);
+		return new TemplateResponse('serverinfo_hetzner', 'settings-admin', $params);
 	}
 
 	/**
 	 * @return string the section ID, e.g. 'sharing'
 	 */
 	public function getSection(): string {
-		return 'serverinfo';
+		return 'serverinfo_hetzner';
 	}
 
 	/**

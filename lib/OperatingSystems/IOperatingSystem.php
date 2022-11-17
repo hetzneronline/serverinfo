@@ -24,10 +24,10 @@ declare(strict_types=1);
  *
  */
 
-namespace OCA\ServerInfo\OperatingSystems;
+namespace OCA\ServerInfoHetzner\OperatingSystems;
 
-use OCA\ServerInfo\Resources\Disk;
-use OCA\ServerInfo\Resources\Memory;
+use OCA\ServerInfoHetzner\Resources\Disk;
+use OCA\ServerInfoHetzner\Resources\Memory;
 
 interface IOperatingSystem {
 	public function supported(): bool;

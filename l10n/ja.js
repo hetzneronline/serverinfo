@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "CPU情報が利用できません",
     "Load average: {cpu} (last minute)" : "平均ロード: {cpu} (最終11分)",

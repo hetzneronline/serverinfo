@@ -11,5 +11,5 @@ require_once __DIR__ . '/../../../lib/base.php';
 if (!class_exists('\PHPUnit\Framework\TestCase')) {
 	require_once('PHPUnit/Autoload.php');
 }
-\OC_App::loadApp('serverinfo');
+\OC_App::loadApp('serverinfo_hetzner');
 OC_Hook::clear();

@@ -6,17 +6,17 @@
 		 timeoutForLargeTests="900"
 		 convertDeprecationsToExceptions="true"
 		>
-	<testsuite name='Nextcloud - ServerInfo Tests'>
+	<testsuite name='Nextcloud - ServerInfo Hetzner Tests'>
 		<directory suffix='Test.php'>.</directory>
 	</testsuite>
 	<!-- filters for code coverage -->
 	<filter>
 		<whitelist>
-			<directory suffix=".php">../../serverinfo/lib</directory>
+			<directory suffix=".php">../../serverinfo_hetzner/lib</directory>
 			<exclude>
-				<directory suffix=".php">../../serverinfo/l10n</directory>
-				<directory suffix=".php">../../serverinfo/lists</directory>
-				<directory suffix=".php">../../serverinfo/tests</directory>
+				<directory suffix=".php">../../serverinfo_hetzner/l10n</directory>
+				<directory suffix=".php">../../serverinfo_hetzner/lists</directory>
+				<directory suffix=".php">../../serverinfo_hetzner/tests</directory>
 			</exclude>
 		</whitelist>
 	</filter>

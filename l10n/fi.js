@@ -1,5 +1,5 @@
 OC.L10N.register(
-    "serverinfo",
+    "serverinfo_hetzner",
     {
     "CPU info not available" : "Suorittimen tietoja ei ole saatavilla",
     "Load average: {cpu} (last minute)" : "Keskimääräinen kuorma: {cpu} (viimeisin minuutti)",
