@@ -31,7 +31,7 @@ class DefaultOs implements IOperatingSystem {
 	}
 
 	public function getMemory(): Memory {
-		return new Memory();
+        return new Memory();
 	}
 
 	public function getCpuName(): string {
