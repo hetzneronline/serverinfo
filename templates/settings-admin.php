@@ -27,11 +27,6 @@ script('serverinfo_hetzner', 'smoothie');
 script('serverinfo_hetzner', 'Chart.min');
 
 style('serverinfo_hetzner', 'style');
-
-/** @var \OCA\ServerInfoHetzner\Resources\Memory $memory */
-$memory = $_['memory'];
-/** @var \OCA\ServerInfoHetzner\Resources\Disk[] $disks */
-$disks = $_['diskinfo'];
 ?>
 
 <div class="server-info-wrapper">

@@ -26,6 +26,7 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfoHetzner\OperatingSystems;
 
+use OCA\ServerInfoHetzner\Resources\NetInterface;
 use OCA\ServerInfoHetzner\Resources\Disk;
 use OCA\ServerInfoHetzner\Resources\Memory;
 
@@ -67,17 +68,7 @@ interface IOperatingSystem {
 	/**
 	 * Get info about available network interfaces.
 	 *
-	 * [
-	 *       [
-	 *             'duplex' => string,
-	 *             'interface' => string,
-	 *             'ipv4' => string,
-	 *             'ipv6' => string,
-	 *             'mac' => string,
-	 *             'speed' => string,
-	 *             'status' => string,
-	 *       ],
-	 * ]
+	 * @return NetInterface[]
 	 */
 	public function getNetworkInterfaces(): array;
 
