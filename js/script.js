@@ -50,7 +50,7 @@
 	}
 
 	function getThemedPassiveColor() {
-		return OCA.Theming && OCA.Theming.inverted ? 'rgb(55, 55, 55)' : 'rgb(200, 200, 200)';
+		return 'rgb(148, 148, 148)';
 	}
 
 	/**
@@ -210,27 +210,11 @@
 	}
 
 	function initMonitoringLinkToClipboard() {
-		var monAPIBox = $("#ocsEndPoint");
-		/* reused from settings/js/authtoken_view.js */
-		monAPIBox.find('.clipboardButton').tooltip({placement: 'bottom', title: t('core', 'Copy'), trigger: 'hover'});
-
-		// Clipboard!
 		var clipboard = new Clipboard('.clipboardButton');
 		clipboard.on('success', function (e) {
-			var $input = $(e.trigger);
-			$input.tooltip('hide')
-				.attr('data-original-title', t('core', 'Copied!'))
-				.tooltip('fixTitle')
-				.tooltip({placement: 'bottom', trigger: 'manual'})
-				.tooltip('show');
-			_.delay(function () {
-				$input.tooltip('hide')
-					.attr('data-original-title', t('core', 'Copy'))
-					.tooltip('fixTitle');
-			}, 3000);
+			OC.Notification.show('Copied!', { type: 'success' })
 		});
-		clipboard.on('error', function (e) {
-			var $input = $(e.trigger);
+		clipboard.on('error', function () {
 			var actionMsg = '';
 			if (/iPhone|iPad/i.test(navigator.userAgent)) {
 				actionMsg = t('core', 'Not supported!');
@@ -239,17 +223,7 @@
 			} else {
 				actionMsg = t('core', 'Press Ctrl-C to copy.');
 			}
-
-			$input.tooltip('hide')
-				.attr('data-original-title', actionMsg)
-				.tooltip('fixTitle')
-				.tooltip({placement: 'bottom', trigger: 'manual'})
-				.tooltip('show');
-			_.delay(function () {
-				$input.tooltip('hide')
-					.attr('data-original-title', t('core', 'Copy'))
-					.tooltip('fixTitle');
-			}, 3000);
+			OC.Notification.show(actionMsg, { type: 'error' })
 		});
 	}
 

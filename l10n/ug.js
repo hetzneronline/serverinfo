@@ -1,10 +1,10 @@
 OC.L10N.register(
     "serverinfo_hetzner",
     {
-    "Users" : "ئىشلەتكۈچىلەر",
-    "Groups" : "گۇرۇپپا",
     "Size:" : "چوڭلۇقى:",
     "Type:" : "تىپى:",
+    "Users" : "ئىشلەتكۈچىلەر",
+    "Groups" : "گۇرۇپپا",
     "Size" : "چوڭلۇقى",
     "Files" : "ھۆججەتلەر",
     "Version" : "نەشرى",
