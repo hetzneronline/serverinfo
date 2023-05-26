@@ -195,6 +195,10 @@ style('serverinfo_hetzner', 'style');
 						<p>
 							<?php p($l->t('Upload max size:').' (WebDAV):'); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
+						</p>                                               
+						<p>
+							<?php p($l->t('OPcache Revalidate Frequency:')); ?>
+							<em id="phpOpcacheRevalidateFreq"><?php p($_['php']['opcache_revalidate_freq']); ?></em>
 						</p>
 						<p>
 							<?php p($l->t('Extensions:')); ?>
