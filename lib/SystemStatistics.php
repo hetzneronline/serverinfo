@@ -56,6 +56,7 @@ class SystemStatistics {
 		$memoryUsage = $this->os->getMemory();
 		return [
 			'version' => $this->config->getSystemValue('version'),
+			'update' => $this->getServerUpdateInfo(),
 			'theme' => $this->config->getSystemValue('theme', 'none'),
 			'enable_avatars' => $this->config->getSystemValue('enable_avatars', true) ? 'yes' : 'no',
 			'enable_previews' => $this->config->getSystemValue('enable_previews', true) ? 'yes' : 'no',
@@ -71,6 +72,18 @@ class SystemStatistics {
 			'swap_total' => $memoryUsage->getSwapTotal() * 1024,
 			'swap_free' => $memoryUsage->getSwapFree() * 1024,
 			'apps' => $this->getAppsInfo()
+		];
+	}
+
+	/**
+	 * Get info about server updates and last checked timestamp
+	 *
+	 * @return array information about core updates
+	 */
+	protected function getServerUpdateInfo(): array {
+		return [
+			'lastupdatedat' => (int) $this->config->getAppValue('core', 'lastupdatedat'),
+			'available' => false,
 		];
 	}
 
