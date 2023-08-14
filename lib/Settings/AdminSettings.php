@@ -57,8 +57,7 @@ class AdminSettings implements ISettings {
 		DatabaseStatistics $databaseStatistics,
 		ShareStatistics $shareStatistics,
 		SessionStatistics $sessionStatistics,
-		SystemStatistics $systemStatistics,
-		private IConfig $config
+		SystemStatistics $systemStatistics
 	) {
 		$this->os = $os;
 		$this->l = $l;
@@ -88,7 +87,7 @@ class AdminSettings implements ISettings {
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
 			'system' => $this->systemStatistics->getSystemStatistics(),
-			'thermalzones' => $this->os->getThermalZones(),
+			'thermalzones' => $this->os->getThermalZones()
 		];
 
 		return new TemplateResponse('serverinfo_hetzner', 'settings-admin', $params);
