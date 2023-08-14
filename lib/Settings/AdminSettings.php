@@ -33,6 +33,7 @@ use OCA\ServerInfoHetzner\ShareStatistics;
 use OCA\ServerInfoHetzner\StorageStatistics;
 use OCA\ServerInfoHetzner\SystemStatistics;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
@@ -49,14 +50,14 @@ class AdminSettings implements ISettings {
 	private SystemStatistics $systemStatistics;
 
 	public function __construct(Os $os,
-								IL10N $l,
-								IURLGenerator $urlGenerator,
-								StorageStatistics $storageStatistics,
-								PhpStatistics $phpStatistics,
-								DatabaseStatistics $databaseStatistics,
-								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics,
-								SystemStatistics $systemStatistics
+		IL10N $l,
+		IURLGenerator $urlGenerator,
+		StorageStatistics $storageStatistics,
+		PhpStatistics $phpStatistics,
+		DatabaseStatistics $databaseStatistics,
+		ShareStatistics $shareStatistics,
+		SessionStatistics $sessionStatistics,
+		SystemStatistics $systemStatistics
 	) {
 		$this->os = $os;
 		$this->l = $l;

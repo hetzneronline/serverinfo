@@ -25,7 +25,10 @@ namespace OCA\ServerInfoHetzner\OperatingSystems;
 
 use OCA\ServerInfoHetzner\Resources\Memory;
 
-class DefaultOs implements IOperatingSystem {
+class Linux implements IOperatingSystem {
+	private const AF_INET = 2;
+	private const AF_INET6 = 10;
+
 	public function supported(): bool {
 		return true;
 	}
