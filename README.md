@@ -108,6 +108,8 @@ https://<nextcloud-fqdn>/ocs/v2.php/apps/serverinfo_hetzner/api/v1/info
 
 ## Configuration
 
+##### Background job to update storage statistics
+
 Since collecting storage statistics might take time and cause slow downs, they are updated in the background. A background job runs once every three hours to update the number of storages and files. The interval can be overridden per app settings (the value is specified in seconds):
 
 ``php occ config:app:set --value=3600 serverinfo_hetzner job_interval_storage_stats``
@@ -125,3 +127,27 @@ php occ serverinfo_hetzner:update-storage-statistics -v --output=json_pretty
     "num_storages_other": 33
 }
 ```
+
+##### Restricted mode (>= Nextcloud 28)
+
+To obtain information about your server, the serverinfo app reads files outside the application directory (e.g. /proc on Linux) or executes shell commands (e.g. df on Linux). 
+
+If you don't want that (for example, to avoid open_basedir warnings) enable the restricted mode.
+
+Enable:
+
+``php occ config:app:set --value=yes serverinfo restricted_mode``
+
+Disable:
+
+``php occ config:app:delete serverinfo restricted_mode``
+
+##### Show phpinfo (>= Nextcloud 28)
+
+Enable:
+
+``php occ config:app:set --value=yes serverinfo phpinfo``
+
+Disable:
+
+``php occ config:app:delete serverinfo phpinfo``
