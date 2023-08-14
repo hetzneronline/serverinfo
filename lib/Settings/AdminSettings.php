@@ -33,6 +33,7 @@ use OCA\ServerInfoHetzner\ShareStatistics;
 use OCA\ServerInfoHetzner\StorageStatistics;
 use OCA\ServerInfoHetzner\SystemStatistics;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\Settings\ISettings;
@@ -49,14 +50,15 @@ class AdminSettings implements ISettings {
 	private SystemStatistics $systemStatistics;
 
 	public function __construct(Os $os,
-								IL10N $l,
-								IURLGenerator $urlGenerator,
-								StorageStatistics $storageStatistics,
-								PhpStatistics $phpStatistics,
-								DatabaseStatistics $databaseStatistics,
-								ShareStatistics $shareStatistics,
-								SessionStatistics $sessionStatistics,
-								SystemStatistics $systemStatistics
+		IL10N $l,
+		IURLGenerator $urlGenerator,
+		StorageStatistics $storageStatistics,
+		PhpStatistics $phpStatistics,
+		DatabaseStatistics $databaseStatistics,
+		ShareStatistics $shareStatistics,
+		SessionStatistics $sessionStatistics,
+		SystemStatistics $systemStatistics,
+		private IConfig $config
 	) {
 		$this->os = $os;
 		$this->l = $l;
@@ -86,7 +88,7 @@ class AdminSettings implements ISettings {
 			'database' => $this->databaseStatistics->getDatabaseStatistics(),
 			'activeUsers' => $this->sessionStatistics->getSessionStatistics(),
 			'system' => $this->systemStatistics->getSystemStatistics(),
-			'thermalzones' => $this->os->getThermalZones()
+			'thermalzones' => $this->os->getThermalZones(),
 		];
 
 		return new TemplateResponse('serverinfo_hetzner', 'settings-admin', $params);

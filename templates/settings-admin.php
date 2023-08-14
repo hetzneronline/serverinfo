@@ -27,6 +27,8 @@ script('serverinfo_hetzner', 'smoothie');
 script('serverinfo_hetzner', 'Chart.min');
 
 style('serverinfo_hetzner', 'style');
+
+/** @var array $_ */
 ?>
 
 <div class="server-info-wrapper">
@@ -55,10 +57,6 @@ style('serverinfo_hetzner', 'style');
 					<?php p($l->t('Disk')); ?>
 				</h2>
 			</div>
-		</div>
-
-		<div class="smallinfo">
-			<?php p($l->t('You will get a notification once one of your disks is nearly full.')); ?>
 		</div>
 
 		<p><?php p($l->t('Files:')); ?> <strong id="numFilesStorage"><?php p($_['storage']['num_files']); ?></strong></p>
@@ -195,7 +193,7 @@ style('serverinfo_hetzner', 'style');
 						<p>
 							<?php p($l->t('Upload max size:').' (WebDAV):'); ?>
 							<em id="phpUploadMaxSize"><?php p($_['php']['upload_max_filesize']); ?></em>
-						</p>                                               
+						</p>
 						<p>
 							<?php p($l->t('OPcache Revalidate Frequency:')); ?>
 							<em id="phpOpcacheRevalidateFreq"><?php p($_['php']['opcache_revalidate_freq']); ?></em>
