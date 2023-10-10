@@ -23,7 +23,11 @@ declare(strict_types=1);
 
 namespace OCA\ServerInfoHetzner\OperatingSystems;
 
+use OCA\ServerInfoHetzner\Resources\Disk;
 use OCA\ServerInfoHetzner\Resources\Memory;
+use OCA\ServerInfoHetzner\Resources\NetInterface;
+use OCA\ServerInfoHetzner\Resources\ThermalZone;
+use RuntimeException;
 
 class Linux implements IOperatingSystem {
 	private const AF_INET = 2;
