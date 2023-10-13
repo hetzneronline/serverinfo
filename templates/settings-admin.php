@@ -26,6 +26,7 @@ script('serverinfo_hetzner', 'script');
 script('serverinfo_hetzner', 'smoothie');
 script('serverinfo_hetzner', 'Chart.min');
 
+style('serverinfo_hetzner', 'style');
 /** @var array $_ */
 ?>
 
